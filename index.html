@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Papa 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1b1b2f, #162447, #1f4068);
+      color: white;
+      overflow-x: hidden;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-top: 60px;
+      background: linear-gradient(45deg, #f9d423, #ff4e50);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .music-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #ffb703;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      color: #000;
+      font-weight: bold;
+      box-shadow: 0 0 10px #ffb703;
+      transition: 0.3s;
+    }
+    .music-toggle:hover { transform: scale(1.1); }
+
+    #photo-section {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+    }
+
+    #photo-section img {
+      width: 70%;
+      max-width: 500px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(255, 223, 0, 0.6);
+      animation: fadeIn 3s ease, glow 3s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 20px rgba(255, 223, 0, 0.3); }
+      to { box-shadow: 0 0 40px rgba(255, 223, 0, 0.8); }
+    }
+
+    #wish-wall {
+      margin: 50px auto;
+      width: 90%;
+      max-width: 600px;
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    }
+
+    #wish-wall h2 {
+      color: #ffdd00;
+      margin-bottom: 15px;
+    }
+
+    form input, form textarea {
+      width: 90%;
+      margin: 10px 0;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    form button {
+      background: #06d6a0;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: black;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    form button:hover { transform: scale(1.05); }
+
+    .wish {
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    #surprise {
+      margin: 50px auto;
+      background: #ff4e50;
+      color: white;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.4s;
+    }
+    #surprise:hover { background: #ff6f61; transform: scale(1.05); }
+
+    #message {
+      margin-top: 20px;
+      font-size: 1.3rem;
+      color: #ffd166;
+      display: none;
+      animation: fadeIn 2s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: gold;
+      top: 0;
+      animation: fall 5s linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Happy Birthday Daddy! 🎂</h1>
+  <button class="music-toggle" onclick="toggleMusic()">🔊 Music</button>
+  <audio id="bg-music" loop>
+    <source src="C:\Users\nikhi\Downloads\Daddy.mp3" type="audio/mpeg">
+  </audio>
+
+  <section id="photo-section">
+    <img src="Daddy_photo.jpg" alt="Father and Son" />
+  </section>
+
+  <section id="wish-wall">
+    <h2>💌 Wish Wall</h2>
+    <form id="wish-form">
+      <input type="text" id="name" placeholder="Your Name" required><br/>
+      <textarea id="messageInput" rows="3" placeholder="Your Birthday Wish..." required></textarea><br/>
+      <button type="submit">Send Wish 💖</button>
+    </form>
+    <div id="wishes"></div>
+  </section>
+
+  <button id="surprise" onclick="revealMessage()">🎁 Click for a Surprise</button>
+  <p id="message">"Dad, you are my hero, my inspiration, and my guiding light.  
+  Thank you for everything. I love you endlessly ❤️"</p>
+
+  <script>
+    function createConfetti() {
+      for (let i = 0; i < 80; i++) {
+        let confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = ['#ffdd00','#ff4e50','#06d6a0','#ffd166'][Math.floor(Math.random()*4)];
+        confetti.style.animationDuration = (3 + Math.random() * 3) + 's';
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+      }
+    }
+    createConfetti();
+    setInterval(createConfetti, 5000);
+
+    let musicPlaying = false;
+    function toggleMusic() {
+      const music = document.getElementById('bg-music');
+      if (musicPlaying) {
+        music.pause();
+        musicPlaying = false;
+      } else {
+        music.play();
+        musicPlaying = true;
+      }
+    }
+
+    const form = document.getElementById('wish-form');
+    const wishesDiv = document.getElementById('wishes');
+    const savedWishes = JSON.parse(localStorage.getItem('wishes')) || [];
+
+    function displayWishes() {
+      wishesDiv.innerHTML = '';
+      savedWishes.forEach(wish => {
+        const div = document.createElement('div');
+        div.className = 'wish';
+        div.innerHTML = `<strong>${wish.name}</strong>: ${wish.message}`;
+        wishesDiv.appendChild(div);
+      });
+    }
+    displayWishes();
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const message = document.getElementById('messageInput').value.trim();
+      if (name && message) {
+        savedWishes.push({ name, message });
+        localStorage.setItem('wishes', JSON.stringify(savedWishes));
+        displayWishes();
+        form.reset();
+      }
+    });
+
+    function revealMessage() {
+      document.getElementById('message').style.display = 'block';
+      createConfetti();
+    }
+  </script>
+</body>
+</html>
